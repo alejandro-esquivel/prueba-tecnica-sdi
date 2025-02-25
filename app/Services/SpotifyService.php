@@ -54,6 +54,7 @@ class SpotifyService
         }
 
         // Si la petición no ha tenido éxito se devuelve un mensaje de error
+
         return response()->json(
             [
                 "message" => "Ha habido un error al obtener el token de acceso",
