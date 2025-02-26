@@ -28,6 +28,7 @@ Para instalar y configurar el proyecto, se ejecutarán los siguientes comandos:
 * Inicializaremos Sail: `./vendor/bin/sail up`
 * Entraremos al contenedor de Sail: `./vendor/bin/sail shell`
 * Migraremos la base de datos: `php artisan migrate`
+* Accederemos a https://developer.spotify.com/dashboard para obtener las claves de API y las introducimos en el .env
 
 Una vez migrados los datos, podremos acceder a la documentación del proyecto mediante [http://127.0.0.1:80/docs/api](http://127.0.0.1:80/docs/api)
 
