@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -29,14 +31,30 @@ class AuthController extends Controller
     /**
      * Login
      *
-     * Este enpoint le permite al usuario iniciar sesión
+     * Este endpoint le permite al usuario iniciar sesión. Cuando obtiene el token se eliminan los anteriores para
+     * evitar que se abuse de la API.
      * @param \Illuminate\Http\Request $req
      * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function login(Request $req)
+    public function getToken(LoginRequest $request)
     {
+        $user = User::query()
+            ->where('email', $request->email)
+            ->first();
 
-        return response()->json(['name' => 'prueba']);
+        $passwordIsCorrect = Hash::check($request->password, $user->password);
+
+        if ($passwordIsCorrect) {
+            $user->tokens()->delete();
+
+            $token = $user->createToken($user->nombre . '-AuthToken')->plainTextToken;
+
+            return response()->json([
+                'access_token' => $token
+            ]);
+        }
+
+        return response()->json(['message' => 'Las credenciales introducidas no son correctas'], 401);
     }
 
     /**
@@ -45,8 +63,11 @@ class AuthController extends Controller
      * Este endpoint permite al usuario cerrar sesión
      * @return void
      */
-    public function logout()
+    public function revokeTokens()
     {
+        auth()->user()->tokens()->delete();
+
+        return response()->json(["message" => "Se ha cerrado la sesión"]);
 
     }
 }
