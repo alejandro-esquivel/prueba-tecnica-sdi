@@ -7,7 +7,8 @@ use App\Http\Controllers\ArtistController;
 
 Route::prefix('artists')->group(function () {
     Route::get('find', [ArtistController::class, 'search'])->name('artists.find');
-    Route::get('/:artist', [ArtistController::class, 'get'])->name('artists.get');
+    Route::get('/{id}', [ArtistController::class, 'get'])->name('artists.get');
+    Route::get('/{id}/albums', [ArtistController::class, 'getAlbums'])->name('artists.getAlbums');
 });
 
 Route::get('/user', function (Request $request) {
