@@ -33,7 +33,6 @@ class ArtistController extends Controller
 
 
         $validator = Validator::make($request->query(), [
-            /** @query */
             'nombre' => ['required', 'string']
         ], $messages);
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
+
     /**
      * Registro
      *
@@ -18,6 +19,7 @@ class AuthController extends Controller
      * un proceso de verificación de email, se verifica automáticamente al registrarse.
      * @param \App\Http\Requests\RegisterRequest $request
      * @return void
+     * @unauthenticated
      */
     public function register(RegisterRequest $request)
     {
@@ -35,6 +37,7 @@ class AuthController extends Controller
      * evitar que se abuse de la API.
      * @param \Illuminate\Http\Request $req
      * @return mixed|\Illuminate\Http\JsonResponse
+     * @unauthenticated
      */
     public function getToken(LoginRequest $request)
     {
